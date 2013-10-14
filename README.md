@@ -1,4 +1,4 @@
 Tessera
 =======
 
-Front-end package for memory capture and forensic tools
+Front-end wrapper and system profile package for The Volatility Framework.
