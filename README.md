@@ -11,26 +11,26 @@ Call/Run program using:<br />
 <code>./tessera</code> <br />
 
 After booting, Tessera will ask for a case name. Takes a string for input. <br />
-<code>	Enter case name: 		Case#067 - Mark Phillips<br />
-</code>
+<p><code>	Enter case name: 		Case#067 - Mark Phillips<br />
+</code> </p>
 Tessera will then ask for a list of investigator names. Terminate the list by entering a "." <br />
-<code>	Enter investigator names: 	John Doe <br />
-				 	Mary Sue<<br /> 
-					.<br />	 
-</code>
+<p><code>	Enter investigator names: <t> 	John Doe <br />
+				 <t><t><t>	Mary Sue<br /> 
+				<t><t><t>	.<br />	 
+</code></p>
 The next portion asked for is the location of the memory dump that is being analyzed; this location is verified by Tessera, so if Tessera can't find the image, it will ask for a new location.<br />
 <code>	Enter full path to image: 	/home/john/forensics/mark.img</code><br />
 
 Tessera then takes the image and runs imageinfo on it to get a list of profiles. It automatically lists these and then asks you to choose a number. If no number is specified (you just hit enter), it will grab the first option. If you choose OTHER, it will prompt for a profile name. This must be a valid profile that Volatility knows about. <br />
-<code>	Profile appears to be: <br />
-		1. WIN7SP0x64  <br />
-		2. WIN7SP1x64  <br />
-		3. OTHER 	<br />
+<p><code>	Profile appears to be: <br />
+	1. WIN7SP0x64  <br />
+	2. WIN7SP1x64  <br />
+	3. OTHER 	<br />
 	Choose profile:		 	3 <br />
 	Enter profile:			WIN2008R2SP0x64<br />
-</code>
+</code></p>
 Tessera will then attempt to built the case with the information that you have given it. If the case was successfully built and Tessera runs into no problems, it will inform the user of its success. Otherwise it will (hopefully) exit gracefully.<br />
-<code>	Case successfully built.</code><br />
+<<t>code>	Case successfully built.</code><br />
 
 From here on out, Tessera will ask questions about what type of information you want to get from the image. List of supported options are: <br />
 * Processes
