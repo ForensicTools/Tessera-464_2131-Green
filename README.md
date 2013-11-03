@@ -8,29 +8,29 @@ This tool acts as an interactive, easier-to-use wrapper around the already popul
 Usage
 ------
 Call/Run program using:
-	./tessera
+<code>./tessera</code>
 
 After booting, Tessera will ask for a case name. Takes a string for input. 
-	Enter case name: 		Case#067 - Mark Phillips
-
+<code>	Enter case name: 		Case#067 - Mark Phillips
+</code>
 Tessera will then ask for a list of investigator names. Terminate the list by entering a "." 
-	Enter investigator names: 	John Doe
+<code>	Enter investigator names: 	John Doe
 				 	Mary Sue
 					.
-
+</code>
 The next portion asked for is the location of the memory dump that is being analyzed; this location is verified by Tessera, so if Tessera can't find the image, it will ask for a new location.
-	Enter full path to image: 	/home/john/forensics/mark.img
+<code>	Enter full path to image: 	/home/john/forensics/mark.img
 
 Tessera then takes the image and runs imageinfo on it to get a list of profiles. It automatically lists these and then asks you to choose a number. If no number is specified (you just hit enter), it will grab the first option. If you choose OTHER, it will prompt for a profile name. This must be a valid profile that Volatility knows about.
-	Profile appears to be: 
+<code>	Profile appears to be: 
 		1. WIN7SP0x64
 		2. WIN7SP1x64
 		3. OTHER
 	Choose profile:		 	3
 	Enter profile:			WIN2008R2SP0x64
-
+</code>
 Tessera will then attempt to built the case with the information that you have given it. If the case was successfully built and Tessera runs into no problems, it will inform the user of its success. Otherwise it will (hopefully) exit gracefully.
-	Case successfully built.
+<code>	Case successfully built.</code>
 
 From here on out, Tessera will ask questions about what type of information you want to get from the image. List of supported options are: 
 * Processes
