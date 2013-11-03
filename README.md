@@ -36,8 +36,9 @@ From here on out, Tessera will ask questions about what type of information you 
 * Processes
 * Open Files and Registry Handles
 * Network Information
-* Passwords and Cryptographic Keys
-From here on out, Tessera will guide further down in and ask the user what type of information it's interested, and drill down to whatever specified granularity. Information gathered will be found in a directory located in the CWD where the image file sits in this format:<br />
+* Passwords and Cryptographic Keys<br />
+
+Tessera will now guide further down into Volatility functionality and ask the user what type of information they're interested, and drill down to whatever specified granularity. Information gathered will be found in a directory located in the CWD where the image file sits in this format:<br />
 <t><t> <code>/IMAGE_LOCATION/Tessera/data_type/drill/down/output</code>
 					 		
 
