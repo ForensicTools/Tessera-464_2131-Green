@@ -200,6 +200,9 @@ def profile_finder(image):
 	# If 'other' was selected, have the user enter their own profile. This HAS to be correct; if they goof up the syntax, it's going to throw errors later
 	if (int(prof) == i):
 		profile = raw_input('Enter profile: ')
+		profiles = profileBuilder()
+		while (profile not in profiles):
+			profile = raw_input('Unsupported Profile.\nEnter profile: ')
 		return profile
 	else:
 		prof=int(prof)-1
@@ -213,6 +216,15 @@ def pluginBuilder():
 	plugins = [line.strip() for line in plugins]
 	f.close()
 	return plugins
+
+def profileBuilder():
+        cwd = os.getcwd()
+        f = open(cwd+'/profiles.txt')
+        profiles = f.readlines()
+        profiles = [line.strip() for line in profiles]
+        f.close()
+        return profiles
+
 
 # Calling Main Function
 main()
