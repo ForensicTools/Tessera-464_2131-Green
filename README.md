@@ -1,5 +1,6 @@
 Tessera
 =======
+Author: Kayla Green
 
 Front-end wrapper for The Volatility Framework.
 
