@@ -40,7 +40,9 @@ Tessera will then attempt to built the case with the information that you have g
 From here on out, Tessera will ask questions about what type of information you want to get from the image. List of supported plugins can be found in the plugins.txt file. By default, this is the same list of plugins in the standalone copy of the Volatility Framework. To call a plugin, simply type in its name.
 
 Information gathered will be found in a directory located in the CWD where the image file sits in this format:<br />
-<t><t> <code>/IMAGE_LOCATION/Tessera/data_type/drill/down/output</code>
+<t><t> <code>/IMAGE_LOCATION/Tessera/case_file/output</code>
+
+In addition, a hail mary option is available to drill through all available plugins. This is not a smart function and does not perform OS detection; use at your own risk. 
 					 		
 
 Future Additions
