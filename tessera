@@ -87,13 +87,6 @@ def main():
 	# Build the list of supported plugins from the plugins.txt list
 	plugins = pluginBuilder()
 
-	# Choose whether or not to write results to a file
-	write = raw_input('\nWrite plugin results to file? (y/n) : ')
-	if (write == 'y'):
-		write = True
-	else:
-		write = False
-
 	# All info is loaded for case
 	print '\nCase successfully built.'
 
@@ -101,18 +94,33 @@ def main():
 
 	# Now we're ready for interactive mode!
 	while (running):
-		entry = raw_input('Choose a plugin (Type exit to quit): ')
+		entry = raw_input('Choose a plugin (exit to quit | list for plugins): ')
 		if (entry in plugins):
 			commands.append('vol -f '+image+' '+entry+' --profile='+profile)
-			if (write):
-				output = Popen(['vol', '-f', image, entry, '--profile='+profile], stdout=PIPE, stderr=PIPE)
-				out, err = output.communicate()
-				print out
-				f = open(caseDir+'/'+entry, 'w')
+			output = Popen(['vol', '-f', image, entry, '--profile='+profile], stdout=PIPE, stderr=PIPE)
+			out, err = output.communicate()
+			print out
+			# Choose whether or not to write results to a file
+		        write = raw_input('\nWrite plugin results to file? (y/n) : ')
+        		if (write == 'y'):
+				file = raw_input('Name File: ')
+				f = open(caseDir+'/'+file, 'w')
 				f.write(out)
 				f.close()
-			else: 
-				call(['vol', '-f', image, entry, '--profile='+profile])
+		if (entry == 'list'):
+			for each in plugins:
+				print(each)
+		if (entry == 'hailmary'):
+			print('Performing hailmary. This may take a while...')
+			for each in plugins:
+				print('Running plugin '+each+'.\n')	
+				commands.append('vol -f '+image+' '+each+' --profile='+profile)
+	                        output = Popen(['vol', '-f', image, each, '--profile='+profile], stdout=PIPE, stderr=PIPE)
+        	                out, err = output.communicate()
+				f = open(caseDir+'/hailmary', 'a')
+				f.write(out)
+				f.close()
+
 		if (entry == 'exit'):
 			# Write the case info file if a case was built
 			if (case == 'y'):
