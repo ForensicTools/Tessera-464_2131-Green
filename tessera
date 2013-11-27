@@ -25,6 +25,7 @@ def main():
 	print "=====================================\n"
 
 	case = raw_input ('\nWould you like to make a case? (y/n) : ')
+	case = check(case)
 
 	# Getting Case Information
 	# Will be used to write a file with case information
@@ -102,6 +103,7 @@ def main():
 			print out
 			# Choose whether or not to write results to a file
 		        write = raw_input('\nWrite plugin results to file? (y/n) : ')
+			write = check(write)
         		if (write == 'y'):
 				file = raw_input('Name File: ')
 				f = open(caseDir+'/'+file, 'w')
@@ -233,6 +235,11 @@ def profileBuilder():
         f.close()
         return profiles
 
+def check(input):
+	options = ['y','n']
+	while (input not in options):
+		input = raw_input('Please enter y or n: ')	
+	return input
 
 # Calling Main Function
 main()
