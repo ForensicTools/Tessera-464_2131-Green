@@ -24,7 +24,7 @@ def main():
 	print "  \_/\___||___/___/\___|_|  \__,_|"
 	print "=====================================\n"
 
-	case = raw_input ('\nWould you like to make a case? (y/n) : ')
+	case = raw_input ('\nWould you like to make a case? (y/[n]) : ')
 	case = check(case)
 
 	# Getting Case Information
@@ -95,34 +95,68 @@ def main():
 
 	# Now we're ready for interactive mode!
 	while (running):
+		hivelist = 'FALSE'
+		# Choose an plugin to run
 		entry = raw_input('Choose a plugin (exit to quit | list for plugins): ')
 		if (entry in plugins):
-			commands.append('vol -f '+image+' '+entry+' --profile='+profile)
-			output = Popen(['vol', '-f', image, entry, '--profile='+profile], stdout=PIPE, stderr=PIPE)
-			out, err = output.communicate()
-			print out
-			# Choose whether or not to write results to a file
-		        write = raw_input('\nWrite plugin results to file? (y/n) : ')
-			write = check(write)
-        		if (write == 'y'):
-				file = raw_input('Name File: ')
-				f = open(caseDir+'/'+file, 'w')
-				f.write(out)
-				f.close()
-		if (entry == 'list'):
-			for each in plugins:
-				print(each)
-		if (entry == 'hailmary'):
-			print('Performing hailmary. This may take a while...')
-			for each in plugins:
-				print('Running plugin '+each+'.\n')	
-				commands.append('vol -f '+image+' '+each+' --profile='+profile)
-	                        output = Popen(['vol', '-f', image, each, '--profile='+profile], stdout=PIPE, stderr=PIPE)
-        	                out, err = output.communicate()
-				f = open(caseDir+'/hailmary', 'a')
-				f.write(out)
-				f.close()
-
+			# Check to see if the plugin requires options to run
+			if (optCheck(entry) == 'TRUE'):
+				if entry == 'hivedump':	
+					print 'If you do not know the offset, do not enter a value below.\nInstead, run command hivelist to get this.'
+					offset = raw_input('Supply Hive Virtual Offset: ')
+					# If they don't know the offset, give them the ability to break out
+					if (offset == ''):
+						break
+					else:
+						output = Popen(['vol', '-f', image, entry, '--hive-offset', offset, '--profile='+profile], stdout=PIPE, stderr=PIPE)
+	                                	out, err = output.communicate()
+	        	                        print out
+        	        	                # Choose whether or not to write results to a file
+                	        	        write = raw_input('\nWrite plugin results to file? (y/[n]) : ')
+                        	        	write = check(write)
+	                        	        if (write == 'y'):
+        	                        	        file = raw_input('Name File: ')
+                	                        	f = open(caseDir+'/'+file, 'w')
+	                        	                f.write(out)
+        	                        	        f.close()
+				# This entry requires a directory for dumping
+				if (entry == 'moddump') or (entry == 'memdump'):
+					# Get the directory we need to dump to
+					dir = raw_input('Provide directory to dump to: ')
+					# If it doesn't exist already, make the dir
+					if (not os.path.isdir(dir)):
+						os.mkdir(dir)
+					# Go ahead and run the command
+					print 'Working....\n'
+					output = Popen(['vol', '-f', image, entry, '--dump-dir', dir, '--profile='+profile], stdout=PIPE, stderr=PIPE)
+                                        out, err = output.communicate()
+                                        print out
+			else:	
+				commands.append('vol -f '+image+' '+entry+' --profile='+profile)
+				output = Popen(['vol', '-f', image, entry, '--profile='+profile], stdout=PIPE, stderr=PIPE)
+				out, err = output.communicate()
+				print out
+				# Choose whether or not to write results to a file
+			        write = raw_input('\nWrite plugin results to file? (y/[n]) : ')
+				write = check(write)
+        			if (write == 'y'):
+					file = raw_input('Name File: ')
+					f = open(caseDir+'/'+file, 'w')
+					f.write(out)
+					f.close()
+			if (entry == 'list'):
+				for each in plugins:
+					print(each)
+			if (entry == 'hailmary'):
+				print('Performing hailmary. This may take a while...')
+				for each in plugins:
+					print('Running plugin '+each+'.\n')	
+					commands.append('vol -f '+image+' '+each+' --profile='+profile)
+		                        output = Popen(['vol', '-f', image, each, '--profile='+profile], stdout=PIPE, stderr=PIPE)
+        		                out, err = output.communicate()
+					f = open(caseDir+'/hailmary', 'a')
+					f.write(out)
+					f.close()
 		if (entry == 'exit'):
 			# Write the case info file if a case was built
 			if (case == 'y'):
@@ -235,8 +269,15 @@ def profileBuilder():
         f.close()
         return profiles
 
+def optCheck(input):
+	options = ['hashdump', 'hivedump', 'memdump', 'moddump']
+	if (input not in options):
+		return 'FALSE'
+	else:
+		return 'TRUE'
+
 def check(input):
-	options = ['y','n']
+	options = ['y','n','']
 	while (input not in options):
 		input = raw_input('Please enter y or n: ')	
 	return input
